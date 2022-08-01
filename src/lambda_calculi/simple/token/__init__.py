@@ -1,7 +1,7 @@
-import lambda_calcluli.python_typing as T
+import lambda_calculi.python_typing as T
 
 
-def pairs_as_kwargs(pairs=T.Pairs[str, object]) -> str:
+def pairs_as_kwargs(pairs: T.Pairs[str, object]) -> str:
     return ", ".join([f"{var}={val!r}" for var, val in pairs])
 
 

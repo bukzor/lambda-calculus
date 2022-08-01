@@ -7,11 +7,11 @@ class Term(Token):
 
 
 class Variable(Term):
+    def __init__(self, name: str):
+        self.name = name
+
     def __str__(self):
         return self.name
-
-    def __init__(name: str):
-        self.name = name
 
     def __repr__(self):
         cls = type(self)
@@ -19,7 +19,7 @@ class Variable(Term):
 
 
 def Application(Term):
-    def __init__(e1: Term, e2: Term):
+    def __init__(self, e1: Term, e2: Term):
         self.e1 = e1
         self.e2 = e2
 

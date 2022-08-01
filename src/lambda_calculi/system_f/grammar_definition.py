@@ -15,7 +15,7 @@ types = meta_grammar.DefinedAs(
         grammar.FunctionType(Type.TAU1, Type.TAU2),
         grammar.ForAll(Type.ALPHA, Kind.KAPPA, Type.TAU),
         grammar.TypeFunction(Type.ALPHA, Kind.KAPPA, Type.TAU),
-        grammar.TypeApplication(Type.TAU1, Type.TAU2),
+        grammar.TypeTypeApplication(Type.TAU1, Type.TAU2),
     ),
 )
 

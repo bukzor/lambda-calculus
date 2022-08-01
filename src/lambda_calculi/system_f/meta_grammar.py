@@ -46,13 +46,14 @@ class And(MetaGrammar):
         g_str = [str(g) for g in self.g]
         width = sum(len(g) for g in g_str) + 5 * (len(g_str) - 1)
         if width < 80:
-            return f"{g1str}     {g2str}"
+            sep = "     "
         else:
-            return f"{g1str}\n{g2str}"
+            sep = "\n"
+        return sep.join(g_str)
 
 
 class Or(MetaGrammar):
-    def __init__(self, *g: MetaGrammar):
+    def __init__(self, *g: grammar.Grammar):
         self.g = g
 
     def __str__(self):
@@ -65,16 +66,16 @@ class EvalStep(MetaGrammar):
         self.after = after
 
     def __str__(self):
-        g1str = str(g1)
-        g2str = str(g2)
-        width = max(len(g1str), len(g2str)) + 2
-        return "{underline(g1str.center(width))}\n{g2str.center(width)}"
+        before = str(self.before)
+        after = str(self.after)
+        width = max(len(before), len(after)) + 2
+        return "{underline(before.center(width))}\n{after.center(width)}"
 
 
 class TypeEquivalence(MetaGrammar):
     def __init__(self, type1: grammar.Type, type2: grammar.Type):
-        self.type1
-        self.type2
+        self.type1 = type1
+        self.type2 = type2
 
     def __str__(self):
         return "{self.type1} ≡ {self.type2}"
@@ -102,12 +103,12 @@ class VariableSubstitution(MetaGrammar):
         var: grammar.Variable,
         expr2: grammar.Expression,
     ):
-        self.expr = expr1
+        self.expr1 = expr1
         self.var = var
         self.expr2 = expr2
 
     def __str__(self):
-        return f"{self.expr1}[{self.var1} := {self.expr2}]"
+        return f"{self.expr1}[{self.var} := {self.expr2}]"
 
 
 class TypeExpressionSubstitution(MetaGrammar):

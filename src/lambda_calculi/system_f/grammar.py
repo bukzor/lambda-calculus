@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from . import variable
 
 
@@ -6,7 +8,10 @@ class Grammar:
 
 
 class Kind(Grammar):
-    pass
+    STAR: KindVariable
+    KAPPA: KindVariable
+    KAPPA1: KindVariable
+    KAPPA2: KindVariable
 
 
 class KindVariable(Kind, variable.Variable):
@@ -29,7 +34,12 @@ class FunctionKind(Kind):
 
 
 class Type(Grammar):
-    pass
+    ALPHA: TypeVariable
+    BETA: TypeVariable
+    SIGMA: TypeVariable
+    TAU: TypeVariable
+    TAU1: TypeVariable
+    TAU2: TypeVariable
 
 
 class TypeVariable(Type, variable.Variable):
@@ -73,7 +83,7 @@ class TypeFunction(Type):
         return f"λ{self.type_var}:{self.var_kind}.{self.type}"
 
 
-class TypeApplication(Type):
+class TypeTypeApplication(Type):
     def __init__(self, type1: Type, type2: Type):
         self.type1 = type1
         self.type2 = type2
@@ -83,7 +93,10 @@ class TypeApplication(Type):
 
 
 class Expression(Grammar):
-    pass
+    X: Variable
+    E: Variable
+    E1: Variable
+    E2: Variable
 
 
 class Variable(Expression, variable.Variable):
@@ -137,7 +150,8 @@ class TypeApplication(Expression):
 
 
 class Environment(Grammar):
-    pass
+    GAMMA: EnvVariable
+    EMPTY: EnvLiteral
 
 
 class EnvVariable(Environment, variable.Variable):
