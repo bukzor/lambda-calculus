@@ -6,5 +6,4 @@ def subscript(n: int) -> str:
 
 
 def underline(s: str) -> str:
-    combining_character_low_line = "\u0332"
-    return "".join(c + combining_character_low_line for c in s)
+    return f"[4m{s}[0m"

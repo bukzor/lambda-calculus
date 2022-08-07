@@ -1,0 +1,35 @@
+[project]
+name = "bukzor.lambda_calculi"
+version = "0!0"
+requires-python = "3.10"
+license = {file = "LICENSE"}
+
+
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[tool.pyright]
+pythonVersion = "3.10"
+extraPaths = [ "src" ]
+strict = [ "**" ]
+strictParameterNoneValue = false
+
+reportCallInDefaultInitializer = "error"
+reportImplicitStringConcatenation = "error"
+reportMissingSuperCall = "error"
+reportPropertyTypeMismatch = "error"
+reportUninitializedInstanceVariable = "error"
+reportUnnecessaryTypeIgnoreComment = "error"
+reportUnusedCallResult = "error"
+
+[tool.pytest.ini_options]
+addopts = "-ra -v -n8 --pyright-dir="
+filterwarnings = [
+    "ignore::pytest.PytestRemovedIn8Warning",
+]
+
+[tool.black]
+line-length = 79
+skip-magic-trailing-comma = true
+color = true
+preview = true

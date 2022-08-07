@@ -1,32 +1,34 @@
-"""According to https://plato.stanford.edu/entries/lambda-calculus/"""
+from dataclasses import dataclass
+
 from . import Token
 
 
-class Term(Token):
+@dataclass(frozen=True)
+class Expression(Token):  # called "term" in the literature
     pass
 
 
-class Variable(Term):
-    def __init__(self, name: str):
-        self.name = name
+@dataclass(frozen=True)
+class Variable(Expression):
+    name: str
 
     def __str__(self):
         return self.name
 
-    def __repr__(self):
-        cls = type(self)
-        return f"{cls.__name__}(name={self.name!r})"
 
-
-def Application(Term):
-    def __init__(self, e1: Term, e2: Term):
-        self.e1 = e1
-        self.e2 = e2
+@dataclass(frozen=True)
+class Application(Expression):
+    expression1: Expression
+    expression2: Expression
 
     def __str__(self):
-        return f"{self.e1} {self.e2}"
+        return f"{self.expression1} {self.expression2}"
 
 
-def Abstraction(Term):
-    def __init__(self):
-        pass
+@dataclass(frozen=True)
+class Abstraction(Expression):
+    variable: Variable
+    expression: Expression
+
+    def __str__(self):
+        return f"λ{self.variable}.{self.expression}"
