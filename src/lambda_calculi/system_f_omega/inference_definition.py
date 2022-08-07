@@ -3,6 +3,7 @@ from lambda_calculi import python_typing as T
 from . import kind, type
 from .environment import GAMMA, EnvWithTypeVariable
 from .inference import And, Inference, ProvesType
+from .lib.typography import inline
 
 type_formation: T.Several[Inference] = (
     Inference(
@@ -68,8 +69,7 @@ def main():
     for section in ("type_formation",):
         print("##", section)
         section = globals()[section]
-        for inference in section:
-            print(inference)
+        print(inline(section, sep="                   "))
 
 
 if __name__ == "__main__":

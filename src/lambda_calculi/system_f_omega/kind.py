@@ -16,7 +16,7 @@ class KindVariable(Kind, VariableBase):
     pass
 
 
-STAR = KindVariable("∗")
+STAR = KindVariable("⚹")
 KAPPA = KindVariable("κ")
 KAPPA1 = KindVariable("κ", 1)
 KAPPA2 = KindVariable("κ", 2)
