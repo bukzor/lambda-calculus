@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from lambda_calculi import python_typing as T
 from lambda_calculi.system_f_omega.grammar import (
     environment,

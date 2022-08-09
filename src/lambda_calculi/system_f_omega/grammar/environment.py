@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from . import Grammar, expression, kind, type
+from . import Grammar, expression, type
 from .lib.variable_base import VariableBase
 
 

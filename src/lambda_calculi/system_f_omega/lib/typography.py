@@ -54,9 +54,9 @@ def inline(
                 line.ljust(old_width).center(max_width).rstrip()
             )
         lines.append("")
-        lines.append("")
         cursor = len(lines)  # advance to the next blank line
         lines.extend(new_lines)
+        lines.append("")
 
     old_lines = lines[cursor:]
     old_width = lines_max_width(old_lines)
