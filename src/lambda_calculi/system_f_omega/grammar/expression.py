@@ -2,10 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from .grammar import Grammar
-from .kind import Kind
+from . import Grammar, kind, type
 from .lib.variable_base import VariableBase
-from .type import Type, TypeVariable
 
 
 @dataclass(frozen=True)
@@ -27,7 +25,7 @@ E2 = Variable("e", 2)
 @dataclass(frozen=True)
 class Function(Expression):
     var: Variable
-    var_type: Type
+    var_type: type.Type
     expr: Expression
 
     def __str__(self):
@@ -45,8 +43,8 @@ class Application(Expression):
 
 @dataclass(frozen=True)
 class TypeExpression(Expression):
-    type_var: TypeVariable
-    var_kind: Kind
+    type_var: type.Variable
+    var_kind: kind.Kind
     expr: Expression
 
     def __str__(self):
@@ -56,7 +54,7 @@ class TypeExpression(Expression):
 @dataclass(frozen=True)
 class TypeApplication(Expression):
     expr: Expression
-    type: Type
+    type: type.Type
 
     def __str__(self):
         return f"{self.expr}{self.type}"

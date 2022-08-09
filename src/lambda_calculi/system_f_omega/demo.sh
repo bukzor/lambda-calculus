@@ -9,5 +9,5 @@ cd "$TOP"
 python3 -m lambda_calculi.system_f_omega.grammar_definition |
   tee lambda_calculi/system_f_omega/grammar_definition.md
 
-python3 -m lambda_calculi.system_f_omega.inference_definition |
+python3 -m lambda_calculi.system_f_omega.inference.type_formation |
   tee lambda_calculi/system_f_omega/inference_definition.md

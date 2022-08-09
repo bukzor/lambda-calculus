@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from .grammar import Grammar
+from . import Grammar
 from .lib.variable_base import VariableBase
 
 
@@ -23,7 +23,7 @@ KAPPA2 = KindVariable("κ", 2)
 
 
 @dataclass(frozen=True)
-class Function(Kind):
+class FunctionKind(Kind):
     kind1: Kind
     kind2: Kind
 

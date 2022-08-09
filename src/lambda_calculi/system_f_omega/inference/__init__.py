@@ -3,12 +3,14 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from lambda_calculi import python_typing as T
-
-from .environment import Environment
-from .expression import Expression, Variable
-from .grammar import Grammar
-from .lib.typography import underline
-from .type import Type, TypeVariable
+from lambda_calculi.system_f_omega.grammar import expression, type
+from lambda_calculi.system_f_omega.grammar.all import (
+    Environment,
+    Expression,
+    Grammar,
+    Type,
+)
+from lambda_calculi.system_f_omega.lib.typography import underline
 
 
 @dataclass(frozen=True)
@@ -97,7 +99,7 @@ class TypeEquivalence(Proposition):
 @dataclass(frozen=True)
 class Substitution(Proposition):
     expr1: Expression
-    var: Variable
+    var: expression.Variable
     expr2: Expression
 
     def __str__(self):
@@ -107,7 +109,7 @@ class Substitution(Proposition):
 @dataclass(frozen=True)
 class TypeSubstitution(Proposition):
     type1: Type
-    type_var: TypeVariable
+    type_var: type.Variable
     type2: Type
 
     def __str__(self):
@@ -117,7 +119,7 @@ class TypeSubstitution(Proposition):
 @dataclass(frozen=True)
 class TypeExpressionSubstitution(Proposition):
     expr: Expression
-    type_var: TypeVariable
+    type_var: type.Variable
     type: Type
 
     def __str__(self):

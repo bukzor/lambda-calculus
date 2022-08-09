@@ -1,9 +1,8 @@
 from lambda_calculi import python_typing as T
+from lambda_calculi.system_f_omega.grammar import environment, kind, type
+from lambda_calculi.system_f_omega.grammar.environment import GAMMA
 
-from . import kind, type
-from .environment import GAMMA, EnvWithTypeVariable
-from .inference import And, Inference, ProvesType
-from .lib.typography import inline
+from . import And, Inference, ProvesType
 
 type_formation: T.Several[Inference] = (
     Inference(
@@ -14,12 +13,13 @@ type_formation: T.Several[Inference] = (
             )
         ),
         ProvesType(
-            GAMMA, type.IsKind(type.Function(type.TAU1, type.TAU2), kind.STAR)
+            GAMMA,
+            type.IsKind(type.FunctionType(type.TAU1, type.TAU2), kind.STAR),
         ),
     ),
     Inference(
         ProvesType(
-            EnvWithTypeVariable(GAMMA, type.ALPHA, kind.KAPPA),
+            environment.WithTypeVariable(GAMMA, type.ALPHA, kind.KAPPA),
             type.IsKind(type.TAU, kind.STAR),
         ),
         ProvesType(
@@ -32,16 +32,14 @@ type_formation: T.Several[Inference] = (
     ),
     Inference(
         hypothesis=ProvesType(
-            EnvWithTypeVariable(GAMMA, type.ALPHA, kind.KAPPA1),
+            environment.WithTypeVariable(GAMMA, type.ALPHA, kind.KAPPA1),
             type.IsKind(type.TAU, kind.KAPPA2),
         ),
         conclusion=ProvesType(
             GAMMA,
             type.IsKind(
-                type.TypeFunction(
-                    type.IsKind(type.ALPHA, kind.KAPPA1), type.TAU
-                ),
-                kind.Function(kind.KAPPA1, kind.KAPPA2),
+                type.Function(type.IsKind(type.ALPHA, kind.KAPPA1), type.TAU),
+                kind.FunctionKind(kind.KAPPA1, kind.KAPPA2),
             ),
         ),
     ),
@@ -51,7 +49,7 @@ type_formation: T.Several[Inference] = (
                 ProvesType(
                     GAMMA,
                     type.IsKind(
-                        type.TAU1, kind.Function(kind.KAPPA2, kind.KAPPA)
+                        type.TAU1, kind.FunctionKind(kind.KAPPA2, kind.KAPPA)
                     ),
                 ),
                 ProvesType(GAMMA, type.IsKind(type.TAU2, kind.KAPPA2)),
@@ -69,7 +67,10 @@ def main():
     for section in ("type_formation",):
         print("##", section)
         section = globals()[section]
-        print(inline(section, sep="                   "))
+
+        from ..lib import typography
+
+        print(typography.inline(section, sep="    ", max_width=50))
 
 
 if __name__ == "__main__":

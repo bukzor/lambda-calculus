@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from .grammar import Grammar
+from . import Grammar
 from .kind import Kind
 from .lib.variable_base import VariableBase
 
@@ -13,20 +13,20 @@ class Type(Grammar):
 
 
 @dataclass(frozen=True)
-class TypeVariable(Type, VariableBase):
+class Variable(Type, VariableBase):
     pass
 
 
-ALPHA = TypeVariable("α")
-BETA = TypeVariable("β")
-SIGMA = TypeVariable("σ")
-TAU = TypeVariable("τ")
-TAU1 = TypeVariable("τ", 1)
-TAU2 = TypeVariable("τ", 2)
+ALPHA = Variable("α")
+BETA = Variable("β")
+SIGMA = Variable("σ")
+TAU = Variable("τ")
+TAU1 = Variable("τ", 1)
+TAU2 = Variable("τ", 2)
 
 
 @dataclass(frozen=True)
-class Function(Type):
+class FunctionType(Type):
     type1: Type
     type2: Type
 
@@ -53,7 +53,7 @@ class ForAll(Type):
 
 
 @dataclass(frozen=True)
-class TypeFunction(Type):
+class Function(Type):
     is_kind: IsKind
     type: Type
 

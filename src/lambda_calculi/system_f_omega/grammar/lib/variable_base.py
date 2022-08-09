@@ -3,8 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from lambda_calculi.python_typing import no_int
-
-from .typography import subscript
+from lambda_calculi.system_f_omega.lib.typography import subscript
 
 
 @dataclass(frozen=True)

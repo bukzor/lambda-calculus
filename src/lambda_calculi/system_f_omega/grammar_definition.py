@@ -1,8 +1,9 @@
-from . import environment, expression, inference, kind, type
+from . import inference
+from .grammar import environment, expression, kind, type
 
 kinds = inference.IsDefinedAs(
     kind.KAPPA,
-    inference.Or((kind.STAR, kind.Function(kind.KAPPA1, kind.KAPPA2))),
+    inference.Or((kind.STAR, kind.FunctionKind(kind.KAPPA1, kind.KAPPA2))),
 )
 
 types = inference.IsDefinedAs(
@@ -10,9 +11,9 @@ types = inference.IsDefinedAs(
     inference.Or(
         (
             type.ALPHA,
-            type.Function(type.TAU1, type.TAU2),
+            type.FunctionType(type.TAU1, type.TAU2),
             type.ForAll(type.IsKind(type.ALPHA, kind.KAPPA), type.TAU),
-            type.TypeFunction(type.IsKind(type.ALPHA, kind.KAPPA), type.TAU),
+            type.Function(type.IsKind(type.ALPHA, kind.KAPPA), type.TAU),
             type.Application(type.TAU1, type.TAU2),
         )
     ),
@@ -36,10 +37,10 @@ environments = inference.IsDefinedAs(
     inference.Or(
         (
             environment.EMPTY,
-            environment.EnvWithVariable(
+            environment.WithVariable(
                 environment.GAMMA, expression.X, type.TAU
             ),
-            environment.EnvWithTypeVariable(
+            environment.WithTypeVariable(
                 environment.GAMMA, type.ALPHA, kind.KAPPA
             ),
         )

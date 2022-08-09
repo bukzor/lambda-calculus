@@ -12,6 +12,7 @@ requires = ["setuptools", "wheel"]
 pythonVersion = "3.10"
 extraPaths = [ "src" ]
 strict = [ "**" ]
+exclude = [ "typesafety", ".pytype" ]
 strictParameterNoneValue = false
 
 reportCallInDefaultInitializer = "error"
