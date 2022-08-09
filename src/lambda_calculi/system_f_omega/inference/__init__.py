@@ -93,7 +93,7 @@ class TypeEquivalence(Proposition):
     type2: Type
 
     def __str__(self):
-        return "{self.type1} ≡ {self.type2}"
+        return f"{self.type1} ≡ {self.type2}"
 
 
 @dataclass(frozen=True)

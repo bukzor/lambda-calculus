@@ -20,9 +20,12 @@ class Variable(Type, VariableBase):
 ALPHA = Variable("α")
 BETA = Variable("β")
 SIGMA = Variable("σ")
+SIGMA1 = Variable("σ", 1)
+SIGMA2 = Variable("σ", 2)
 TAU = Variable("τ")
 TAU1 = Variable("τ", 1)
 TAU2 = Variable("τ", 2)
+TAU3 = Variable("τ", 3)
 
 
 @dataclass(frozen=True)
@@ -68,3 +71,13 @@ class Application(Type):
 
     def __str__(self):
         return f"{self.type1}{self.type2}"
+
+
+@dataclass(frozen=True)
+class Substitution(Type):
+    type: Type
+    var1: Variable
+    var2: Variable
+
+    def __str__(self):
+        return f"{self.type}[{self.var1}:={self.var2}]"
