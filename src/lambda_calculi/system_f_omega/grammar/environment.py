@@ -31,18 +31,16 @@ EMPTY = EnvLiteral("⟨⟩")
 @dataclass(frozen=True)
 class WithVariable(Environment):
     env: Environment
-    var: expression.Variable
-    type: type.Type
+    has_type: expression.HasType
 
     def __str__(self):
-        return f"{self.env},({self.var}:{self.type})"
+        return f"{self.env},({self.has_type})"
 
 
 @dataclass(frozen=True)
 class WithTypeVariable(Environment):
     env: Environment
-    type_var: type.Variable
-    kind: kind.Kind
+    has_kind: type.HasKind
 
     def __str__(self):
-        return f"{self.env},({self.type_var}:{self.kind})"
+        return f"{self.env},({self.has_kind})"

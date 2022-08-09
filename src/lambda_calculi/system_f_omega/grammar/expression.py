@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from . import Grammar, kind, type
+from . import Grammar, type
 from .lib.variable_base import VariableBase
 
 
@@ -24,12 +24,11 @@ E2 = Variable("e", 2)
 
 @dataclass(frozen=True)
 class Function(Expression):
-    var: Variable
-    var_type: type.Type
+    has_type: HasType
     expr: Expression
 
     def __str__(self):
-        return f"λ{self.var}:{self.var_type}.{self.expr}"
+        return f"λ{self.has_type}.{self.expr}"
 
 
 @dataclass(frozen=True)
@@ -42,13 +41,21 @@ class Application(Expression):
 
 
 @dataclass(frozen=True)
+class HasType(Expression):
+    expr: Expression
+    type: type.Type
+
+    def __str__(self):
+        return f"{self.expr}:{self.type}"
+
+
+@dataclass(frozen=True)
 class TypeExpression(Expression):
-    type_var: type.Variable
-    var_kind: kind.Kind
+    has_kind: type.HasKind
     expr: Expression
 
     def __str__(self):
-        return f"Λ{self.type_var}:{self.var_kind}.{self.expr}"
+        return f"Λ{self.has_kind}.{self.expr}"
 
 
 @dataclass(frozen=True)

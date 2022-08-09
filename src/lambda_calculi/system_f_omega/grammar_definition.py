@@ -12,8 +12,8 @@ types = inference.IsDefinedAs(
         (
             type.ALPHA,
             type.FunctionType(type.TAU1, type.TAU2),
-            type.ForAll(type.IsKind(type.ALPHA, kind.KAPPA), type.TAU),
-            type.Function(type.IsKind(type.ALPHA, kind.KAPPA), type.TAU),
+            type.ForAll(type.HasKind(type.ALPHA, kind.KAPPA), type.TAU),
+            type.Function(type.HasKind(type.ALPHA, kind.KAPPA), type.TAU),
             type.Application(type.TAU1, type.TAU2),
         )
     ),
@@ -24,9 +24,13 @@ terms = inference.IsDefinedAs(
     inference.Or(
         (
             expression.X,
-            expression.Function(expression.X, type.TAU, expression.E),
+            expression.Function(
+                expression.HasType(expression.X, type.TAU), expression.E
+            ),
             expression.Application(expression.E1, expression.E2),
-            expression.TypeExpression(type.ALPHA, kind.KAPPA, expression.E),
+            expression.TypeExpression(
+                type.HasKind(type.ALPHA, kind.KAPPA), expression.E
+            ),
             expression.TypeApplication(expression.E, type.TAU),
         )
     ),
@@ -38,10 +42,10 @@ environments = inference.IsDefinedAs(
         (
             environment.EMPTY,
             environment.WithVariable(
-                environment.GAMMA, expression.X, type.TAU
+                environment.GAMMA, expression.HasType(expression.X, type.TAU)
             ),
             environment.WithTypeVariable(
-                environment.GAMMA, type.ALPHA, kind.KAPPA
+                environment.GAMMA, type.HasKind(type.ALPHA, kind.KAPPA)
             ),
         )
     ),

@@ -1,8 +1,7 @@
 from lambda_calculi import python_typing as T
-from lambda_calculi.system_f_omega.grammar import environment, kind, type
-from lambda_calculi.system_f_omega.grammar.environment import GAMMA
+from lambda_calculi.system_f_omega.grammar import kind, type
 
-from . import And, Inference, Nothing, ProvesType, TypeEquivalence
+from . import And, Inference, Nothing, TypeEquivalence
 
 type_equivalence: T.Several[Inference] = (
     Inference(Nothing(), TypeEquivalence(type.TAU, type.TAU)),
@@ -34,15 +33,15 @@ type_equivalence: T.Several[Inference] = (
     Inference(
         And((TypeEquivalence(type.TAU, type.SIGMA),)),
         TypeEquivalence(
-            type.ForAll(type.IsKind(type.ALPHA, kind.KAPPA), type.TAU),
-            type.ForAll(type.IsKind(type.ALPHA, kind.KAPPA), type.SIGMA),
+            type.ForAll(type.HasKind(type.ALPHA, kind.KAPPA), type.TAU),
+            type.ForAll(type.HasKind(type.ALPHA, kind.KAPPA), type.SIGMA),
         ),
     ),
     Inference(
         And((TypeEquivalence(type.TAU, type.SIGMA),)),
         TypeEquivalence(
-            type.Function(type.IsKind(type.ALPHA, kind.KAPPA), type.TAU),
-            type.Function(type.IsKind(type.ALPHA, kind.KAPPA), type.SIGMA),
+            type.Function(type.HasKind(type.ALPHA, kind.KAPPA), type.TAU),
+            type.Function(type.HasKind(type.ALPHA, kind.KAPPA), type.SIGMA),
         ),
     ),
     Inference(
@@ -60,9 +59,9 @@ type_equivalence: T.Several[Inference] = (
     Inference(
         Nothing(),
         TypeEquivalence(
-            type.Function(type.IsKind(type.ALPHA, kind.KAPPA), type.TAU),
+            type.Function(type.HasKind(type.ALPHA, kind.KAPPA), type.TAU),
             type.Function(
-                type.IsKind(type.BETA, kind.KAPPA),
+                type.HasKind(type.BETA, kind.KAPPA),
                 type.Substitution(type.TAU, type.ALPHA, type.BETA),
             ),
         ),
@@ -71,7 +70,7 @@ type_equivalence: T.Several[Inference] = (
         Nothing(),
         TypeEquivalence(
             type.Application(
-                type.Function(type.IsKind(type.ALPHA, kind.KAPPA), type.TAU),
+                type.Function(type.HasKind(type.ALPHA, kind.KAPPA), type.TAU),
                 type.SIGMA,
             ),
             type.Substitution(type.TAU, type.ALPHA, type.SIGMA),
@@ -85,7 +84,7 @@ def main():
         print("##", section)
         section = globals()[section]
 
-        from ..lib import typography
+        from ..lib import typography  # pylint:disable=import-outside-toplevel
 
         print(typography.inline(section, sep="    ", max_width=60))
 

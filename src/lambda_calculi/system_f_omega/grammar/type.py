@@ -38,7 +38,7 @@ class FunctionType(Type):
 
 
 @dataclass(frozen=True)
-class IsKind(Type):
+class HasKind(Type):
     type: Type
     kind: Kind
 
@@ -48,20 +48,20 @@ class IsKind(Type):
 
 @dataclass(frozen=True)
 class ForAll(Type):
-    is_kind: IsKind
+    has_kind: HasKind
     type: Type
 
     def __str__(self):
-        return f"∀{self.is_kind}.{self.type}"
+        return f"∀{self.has_kind}.{self.type}"
 
 
 @dataclass(frozen=True)
 class Function(Type):
-    is_kind: IsKind
+    has_kind: HasKind
     type: Type
 
     def __str__(self):
-        return f"λ{self.is_kind}.{self.type}"
+        return f"λ{self.has_kind}.{self.type}"
 
 
 @dataclass(frozen=True)

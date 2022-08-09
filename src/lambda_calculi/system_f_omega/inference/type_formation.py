@@ -8,37 +8,41 @@ type_formation: T.Several[Inference] = (
     Inference(
         And(
             (
-                ProvesType(GAMMA, type.IsKind(type.TAU1, kind.STAR)),
-                ProvesType(GAMMA, type.IsKind(type.TAU2, kind.STAR)),
+                ProvesType(GAMMA, type.HasKind(type.TAU1, kind.STAR)),
+                ProvesType(GAMMA, type.HasKind(type.TAU2, kind.STAR)),
             )
         ),
         ProvesType(
             GAMMA,
-            type.IsKind(type.FunctionType(type.TAU1, type.TAU2), kind.STAR),
+            type.HasKind(type.FunctionType(type.TAU1, type.TAU2), kind.STAR),
         ),
     ),
     Inference(
         ProvesType(
-            environment.WithTypeVariable(GAMMA, type.ALPHA, kind.KAPPA),
-            type.IsKind(type.TAU, kind.STAR),
+            environment.WithTypeVariable(
+                GAMMA, type.HasKind(type.ALPHA, kind.KAPPA)
+            ),
+            type.HasKind(type.TAU, kind.STAR),
         ),
         ProvesType(
             GAMMA,
-            type.IsKind(
-                type.ForAll(type.IsKind(type.ALPHA, kind.KAPPA), type.TAU),
+            type.HasKind(
+                type.ForAll(type.HasKind(type.ALPHA, kind.KAPPA), type.TAU),
                 kind.STAR,
             ),
         ),
     ),
     Inference(
         hypothesis=ProvesType(
-            environment.WithTypeVariable(GAMMA, type.ALPHA, kind.KAPPA1),
-            type.IsKind(type.TAU, kind.KAPPA2),
+            environment.WithTypeVariable(
+                GAMMA, type.HasKind(type.ALPHA, kind.KAPPA1)
+            ),
+            type.HasKind(type.TAU, kind.KAPPA2),
         ),
         conclusion=ProvesType(
             GAMMA,
-            type.IsKind(
-                type.Function(type.IsKind(type.ALPHA, kind.KAPPA1), type.TAU),
+            type.HasKind(
+                type.Function(type.HasKind(type.ALPHA, kind.KAPPA1), type.TAU),
                 kind.FunctionKind(kind.KAPPA1, kind.KAPPA2),
             ),
         ),
@@ -48,16 +52,16 @@ type_formation: T.Several[Inference] = (
             (
                 ProvesType(
                     GAMMA,
-                    type.IsKind(
+                    type.HasKind(
                         type.TAU1, kind.FunctionKind(kind.KAPPA2, kind.KAPPA)
                     ),
                 ),
-                ProvesType(GAMMA, type.IsKind(type.TAU2, kind.KAPPA2)),
+                ProvesType(GAMMA, type.HasKind(type.TAU2, kind.KAPPA2)),
             )
         ),
         conclusion=ProvesType(
             GAMMA,
-            type.IsKind(type.Application(type.TAU1, type.TAU2), kind.KAPPA),
+            type.HasKind(type.Application(type.TAU1, type.TAU2), kind.KAPPA),
         ),
     ),
 )
@@ -68,7 +72,7 @@ def main():
         print("##", section)
         section = globals()[section]
 
-        from ..lib import typography
+        from ..lib import typography  # pylint:disable=import-outside-toplevel
 
         print(typography.inline(section, sep="    ", max_width=50))
 

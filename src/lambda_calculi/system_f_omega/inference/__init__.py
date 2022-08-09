@@ -133,3 +133,12 @@ class Reduction(Proposition):
 
     def __repr__(self):
         return f"{self.expr1} →→ {self.expr2}"
+
+
+@dataclass(frozen=True)
+class IsAssumed(Proposition):
+    expression: Expression
+    environment: Environment
+
+    def __str__(self):
+        return f"{self.expression} ∈ {self.environment}"
